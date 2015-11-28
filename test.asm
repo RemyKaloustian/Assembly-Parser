@@ -1,2 +1,2 @@
-add $r0 45
-mov $ro, $r1 48 89
+AND $r0 45
+LSL $ro, $r1 48 89

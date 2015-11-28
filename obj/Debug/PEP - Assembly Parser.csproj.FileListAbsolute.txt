@@ -4,3 +4,9 @@ D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\PEP - Assembly Parser\bin\D
 D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\PEP - Assembly Parser\obj\Debug\PEP - Assembly Parser.csprojResolveAssemblyReference.cache
 D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\PEP - Assembly Parser\obj\Debug\PEP - Assembly Parser.exe
 D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\PEP - Assembly Parser\obj\Debug\PEP - Assembly Parser.pdb
+D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\Assembly-Parser\bin\Debug\PEP - Assembly Parser.exe.config
+D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\Assembly-Parser\obj\Debug\PEP - Assembly Parser.exe
+D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\Assembly-Parser\obj\Debug\PEP - Assembly Parser.pdb
+D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\Assembly-Parser\bin\Debug\PEP - Assembly Parser.exe
+D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\Assembly-Parser\bin\Debug\PEP - Assembly Parser.pdb
+D:\Documents\Desktop\TRAVAIL\POLYTECH\PEP\PROJET ARM\Assembly-Parser\obj\Debug\PEP - Assembly Parser.csprojResolveAssemblyReference.cache
