@@ -67,29 +67,83 @@ namespace PEP___Assembly_Parser
 
         public void AddInstruction(string item, ref StringBuilder hexaLine)
         {
-            if (item.Contains(AssemblyData.AND)) 
+
+
+            if (item.Contains(AssemblyData.AND))
                 hexaLine.Append(HexaData.AND);
 
             else if (item.Contains(AssemblyData.LSL))
                 hexaLine.Append(HexaData.LSL);
-	      
+
+            else if (item.Contains(AssemblyData.ADC))
+                hexaLine.Append(HexaData.ADC);
+
+            else if (item.Contains(AssemblyData.ASR))
+                hexaLine.Append(HexaData.ASR);
+
+            else if (item.Contains(AssemblyData.BIC))
+                hexaLine.Append(HexaData.BIC);
+
+            else if (item.Contains(AssemblyData.CMN))
+                hexaLine.Append(HexaData.CMN);
+
+            else if (item.Contains(AssemblyData.CMP))
+                hexaLine.Append(HexaData.CMP);
+
+            else if (item.Contains(AssemblyData.LSR))
+                hexaLine.Append(HexaData.LSR);
+
+            else if (item.Contains(AssemblyData.MUL))
+                hexaLine.Append(HexaData.MUL);
+
+            else if (item.Contains(AssemblyData.MVN))
+                hexaLine.Append(HexaData.MVN);
+
+            else if (item.Contains(AssemblyData.OR))
+                hexaLine.Append(HexaData.OR);
+
+            else if (item.Contains(AssemblyData.ORR))
+                hexaLine.Append(HexaData.ORR);
+
+            else if (item.Contains(AssemblyData.ROR))
+                hexaLine.Append(HexaData.ROR);
+
+            else if (item.Contains(AssemblyData.RSB))
+                hexaLine.Append(HexaData.RSB);
+
+            else if (item.Contains(AssemblyData.SBC))
+                hexaLine.Append(HexaData.SBC);
+
+            else if (item.Contains(AssemblyData.TST))
+                hexaLine.Append(HexaData.TST);
         }//AddHexaInstruction()
 
         public void AddRegister(string item, ref StringBuilder hexaLine)
         {
             if (item.Contains(AssemblyData.r0))
-            {
-                hexaLine.Append(HexaData.r0);
-                Console.WriteLine("Added " + HexaData.r0);
-                Console.WriteLine("HexaLine : " + hexaLine);
-            }
+                hexaLine.Append(HexaData.r0);              
 
-            if (item.Contains(AssemblyData.r1))
-            {
-                hexaLine.Append(HexaData.r1);
-                Console.WriteLine("Added " + HexaData.r1);
-                Console.WriteLine("HexaLine : " + hexaLine);
-            }
+            if (item.Contains(AssemblyData.r1))            
+                hexaLine.Append(HexaData.r1);               
+
+            if (item.Contains(AssemblyData.r2))
+                hexaLine.Append(HexaData.r2);
+
+            if (item.Contains(AssemblyData.r3))
+                hexaLine.Append(HexaData.r3);
+
+            if (item.Contains(AssemblyData.r4))
+                hexaLine.Append(HexaData.r4);
+
+            if (item.Contains(AssemblyData.r5))
+                hexaLine.Append(HexaData.r5);
+
+            if (item.Contains(AssemblyData.r6))
+                hexaLine.Append(HexaData.r6);
+
+            if (item.Contains(AssemblyData.r7))
+                hexaLine.Append(HexaData.r7);
+            
         }//AddRegister()
 
         public void AddParameter(string item, ref StringBuilder hexaLine)
