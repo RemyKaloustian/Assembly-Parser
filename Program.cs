@@ -12,7 +12,11 @@ namespace PEP___Assembly_Parser
         {
             Parser p = new Parser();
 
-            p.ReadFromFile();
+           p.ReadFromFile();
+
+           Console.WriteLine("**************************************\n\n \t The result is in output.hex\n****************************************\n\n");
+
+           
 
         }
     }

@@ -10,11 +10,11 @@ namespace PEP___Assembly_Parser
     {
 
         //Assembly instruction values
+
+
+        //Operations on data processing
         public static readonly string AND = "and";
-        public static readonly string OR = "or";
-        public static readonly string LSL = "lsl";
-        public static readonly string LSR = "lsr";
-        public static readonly string ASR = "asr";
+        public static readonly string EOR = "eor";
         public static readonly string ADC = "adc";
         public static readonly string SBC = "sbc";
         public static readonly string ROR = "ror";
@@ -26,15 +26,52 @@ namespace PEP___Assembly_Parser
         public static readonly string MUL = "mul";
         public static readonly string BIC = "bic";
         public static readonly string MVN = "mvn";
-        
+
+        //Operations on immediate
+        public static readonly string ADD = "add";
+        public static readonly string SUB = "sub";
+        public static readonly string MOV = "mov";
+
+        //Operations on both data processing and immediate
+        public static readonly string LSL = "lsl";
+        public static readonly string LSR = "lsr";
+        public static readonly string ASR = "asr";
+
+        //Operations on Load/Store
+        public static readonly string STR = "str";
+        public static readonly string LDR = "ldr"; 
+
+        //Operation on branch
+        public static readonly string B = "b"; 
+
+
+        //Assembly conditions values
+
+        public static readonly string EQ = "eq";
+        public static readonly string NE = "ne";
+        public static readonly string CS = "cs";
+        public static readonly string CC = "cc";
+        public static readonly string MI = "mi";
+        public static readonly string PL = "pl";
+        public static readonly string VS = "vs";
+        public static readonly string VC = "vc";
+        public static readonly string HI = "hi";
+        public static readonly string LS = "ls";
+        public static readonly string GE = "ge";
+        public static readonly string LT = "lt";
+        public static readonly string GT = "gt";
+        public static readonly string LE = "le";
+        public static readonly string AL = "al";
+
         //Assembly register values
-        public static readonly string r0 = "$r0";
-        public static readonly string r1 = "$r1";
-        public static readonly string r2 = "$r2";
-        public static readonly string r3 = "$r3";
-        public static readonly string r4 = "$r4";
-        public static readonly string r5 = "$r5";
-        public static readonly string r6 = "$r6";
-        public static readonly string r7 = "$r7";
-    }
-}
+        public static readonly string R0 = "r0";
+        public static readonly string R1 = "r1";
+        public static readonly string R2 = "r2";
+        public static readonly string R3 = "r3";
+        public static readonly string R4 = "r4";
+        public static readonly string R5 = "r5";
+        public static readonly string R6 = "r6";
+        public static readonly string R7 = "r7";
+    
+    }//class AssemblyData
+}//ns

@@ -8,34 +8,71 @@ namespace PEP___Assembly_Parser
 {
     class HexaData
     {
-        //Hexa equivalent for instructions
-        public static readonly string AND = "0";
-        public static readonly string OR = "1";
-        public static readonly string LSL = "2";
-        public static readonly string LSR = "3";
-        public static readonly string ASR = "4";
-        public static readonly string ADC = "5";
-        public static readonly string SBC = "6";
-        public static readonly string ROR = "7";
-        public static readonly string TST = "8";
-        public static readonly string RSB = "9";
-        public static readonly string CMP = "A";
-        public static readonly string CMN = "B";
-        public static readonly string ORR = "C";
-        public static readonly string MUL = "D";
-        public static readonly string BIC = "E";
-        public static readonly string MVN = "F";
+        public static readonly string DP = "10000";
 
+        public static readonly string IM = "00";
+
+        //public static readonly string SL = "0110";
+
+        //Hexa equivalent for data processing instructions
+        public static readonly string AND = "0000";
+        public static readonly string EOR = "0001";
+        public static readonly string DPLSL = "0010";
+        public static readonly string DPLSR = "0011";
+        public static readonly string DPASR = "0100";
+        public static readonly string ADC = "0101";
+        public static readonly string SBC = "0110";
+        public static readonly string ROR = "0111";
+        public static readonly string TST = "1000";
+        public static readonly string RSB = "1001";
+        public static readonly string CMP = "1010";
+        public static readonly string CMN = "1011";
+        public static readonly string ORR = "1100";
+        public static readonly string MUL = "1101";
+        public static readonly string BIC = "1110";
+        public static readonly string MVN = "1111";
+
+        //Hexa equivalent for immediate instructions
+        public static readonly string ILSL = "000";
+        public static readonly string ILSR = "001";
+        public static readonly string IASR = "010";
+        public static readonly string ADD = "01100";
+        public static readonly string SUB = "01101";
+        public static readonly string MOV = "100";
+
+        //Hexa equivalent for Store and Load
+        public static readonly string LDR = "01101";
+        public static readonly string STR = "10010";
+
+        //Hexa for branch
+        public static readonly string B = "1101";
+
+        //Hexa values for conditions
+        public static readonly string EQ = "0000";
+        public static readonly string NE = "0001";
+        public static readonly string CS = "0010";
+        public static readonly string CC = "0011";
+        public static readonly string MI = "0100";
+        public static readonly string PL = "0101";
+        public static readonly string VS = "0110";
+        public static readonly string VC = "0111";
+        public static readonly string HI = "1000";
+        public static readonly string LS = "1001";
+        public static readonly string GE = "1010";
+        public static readonly string LT = "1011";
+        public static readonly string GT = "1100";
+        public static readonly string LE = "1101";
+        public static readonly string AL = "1110";
 
        //Hexa equivalent for registers
-        public static readonly string  r0 = "0";
-        public static readonly string  r1 = "1";
-        public static readonly string r2 = "2";
-        public static readonly string r3 = "3";
-        public static readonly string  r4 = "4";
-        public static readonly string r5 = "5";
-        public static readonly string r6 = "6";
-        public static readonly string r7 = "7";
+        public static readonly string  R0 = "000";
+        public static readonly string  R1 = "001";
+        public static readonly string  R2 = "010";
+        public static readonly string  R3 = "011";
+        public static readonly string  R4 = "100";
+        public static readonly string  R5 = "101";
+        public static readonly string  R6 = "110";
+        public static readonly string  R7 = "111";
        
 
 
