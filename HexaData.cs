@@ -8,7 +8,7 @@ namespace PEP___Assembly_Parser
 {
     class HexaData
     {
-        public static readonly string DP = "10000";
+        public static readonly string DP = "010000";
 
         public static readonly string IM = "00";
 
