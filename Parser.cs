@@ -40,6 +40,8 @@ namespace PEP___Assembly_Parser
                 this.AddHexaLine(item);
             }
 
+            System.IO.File.AppendAllText(@"" + this.outputpath + "\\output.hex", "v2.0 raw\n");
+
             foreach (string item in this._hexaLines)//We write the hexadecimal lines from _hexaLines in the output file
             {
                 this.WriteInFile(item);
@@ -87,16 +89,11 @@ namespace PEP___Assembly_Parser
            
             string[] toEvaluate = item.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
-            EvaluateDataProcessing(item, ref hexaLine, toEvaluate); //A compléter en fonction de comment on gère l'hexa
-            EvaluateImmediateOperation(item, ref hexaLine, toEvaluate); //A compléter en fonction de comment on gère l'hexa
-            EvaluateLoadStore(item, ref hexaLine, toEvaluate); //A compléter (rajouter store)
+            //Evaluate on instructions
+            EvaluateDataProcessing(item, ref hexaLine, toEvaluate); 
+            EvaluateImmediateOperation(item, ref hexaLine, toEvaluate); 
+            EvaluateLoadStore(item, ref hexaLine, toEvaluate); 
             EvaluateBranch(item, ref hexaLine, toEvaluate);
-
-            //A virer sûrement
-            //EvaluateCondition(item, ref hexaLine);
-            //EvaluateRegister(item, ref hexaLine, toEvaluate);
-            //EvaluateLabel(item, ref hexaLine, toEvaluate);
-            //EvaluateImmediateValue(item, ref hexaLine, toEvaluate);
 
         }//AddHexaInstruction()
 
