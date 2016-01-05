@@ -69,7 +69,14 @@ namespace PEP___Assembly_Parser
 
         public void WriteInFile(string line)
         {
-            System.IO.File.AppendAllText(@""+this.outputpath + "\\output.hex", line);
+            Console.WriteLine("In WriteInFile()");
+            Console.WriteLine("Binary Line added : " + line);
+           // Int64 value = new Int64(Int64.Parse(line));
+
+            string hexa = Convert.ToInt32(line, 2).ToString("X");
+
+            Console.WriteLine("Line in HEX : " + hexa);
+            System.IO.File.AppendAllText(@""+this.outputpath + "\\output.hex", hexa);
 
             File.AppendAllText(@"" + this.outputpath + "\\output.hex", "\n");
         }//WriteInFile()
@@ -80,18 +87,20 @@ namespace PEP___Assembly_Parser
            
             string[] toEvaluate = item.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
-            EvaluateDataProcessing(item, ref hexaLine); //A compléter en fonction de comment on gère l'hexa
-            EvaluateImmediateOperation(item, ref hexaLine); //A compléter en fonction de comment on gère l'hexa
-            EvaluateLoadStore(item, ref hexaLine); //A compléter (rajouter store)
-            EvaluateBranch(item, ref hexaLine);
-            EvaluateCondition(item, ref hexaLine);
-            EvaluateRegister(item, ref hexaLine, toEvaluate);
-            EvaluateLabel(item, ref hexaLine, toEvaluate);
-            EvaluateImmediateValue(item, ref hexaLine, toEvaluate);
+            EvaluateDataProcessing(item, ref hexaLine, toEvaluate); //A compléter en fonction de comment on gère l'hexa
+            EvaluateImmediateOperation(item, ref hexaLine, toEvaluate); //A compléter en fonction de comment on gère l'hexa
+            EvaluateLoadStore(item, ref hexaLine, toEvaluate); //A compléter (rajouter store)
+            EvaluateBranch(item, ref hexaLine, toEvaluate);
+
+            //A virer sûrement
+            //EvaluateCondition(item, ref hexaLine);
+            //EvaluateRegister(item, ref hexaLine, toEvaluate);
+            //EvaluateLabel(item, ref hexaLine, toEvaluate);
+            //EvaluateImmediateValue(item, ref hexaLine, toEvaluate);
 
         }//AddHexaInstruction()
 
-        private void EvaluateLoadStore(string item, ref StringBuilder hexaLine)
+        private void EvaluateLoadStore(string item, ref StringBuilder hexaLine,string[] spliItems)
         {
             Console.WriteLine("In EvaluateDataProcessing()");
 
@@ -99,40 +108,48 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("The line contains " + AssemblyData.LDR);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.LDR, 2).ToString("X"));
+                hexaLine.Append(HexaData.LDR);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                EvaluateRegister(item, ref  hexaLine, spliItems);
             }
 
             else if (item.Contains(AssemblyData.STR))
             {
                 Console.WriteLine("The line contains " + AssemblyData.STR);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.STR, 2).ToString("X"));
+                hexaLine.Append(HexaData.STR);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, spliItems);
+                EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                
             }
 
 
         }//EvaluateLoadStore()
 
-        public void EvaluateDataProcessing(string item, ref StringBuilder hexaLine)
+        public void EvaluateDataProcessing(string item, ref StringBuilder hexaLine, string[] splitItems)
         {
             Console.WriteLine("In EvaluateDataProcessing()");
             if (item.Contains(AssemblyData.AND))
             {
                 Console.WriteLine("The line contains " + AssemblyData.AND);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                Console.WriteLine("DP = " + Convert.ToInt32(HexaData.DP).ToString("X"));
+                
                 hexaLine.Append(HexaData.DP + HexaData.AND);
 
                 Console.WriteLine("hexaLine after : " + hexaLine);
+
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.ADC))
             {
                 Console.WriteLine("The line contains " + AssemblyData.ADC);
                 Console.WriteLine("hexaLine before :  " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.ADC, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.ADC);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.LSL))
@@ -142,9 +159,10 @@ namespace PEP___Assembly_Parser
                 { 
                     Console.WriteLine("Is LSL OF DATA PROCESSING");
                     Console.WriteLine("hexaLine before : "+ hexaLine);
-                    hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.DPLSL, 2).ToString("X"));
+                    hexaLine.Append(HexaData.DP + HexaData.DPLSL);
                    
                     Console.WriteLine("hexaLine after : "+ hexaLine);
+                    EvaluateRegister(item, ref  hexaLine, splitItems);
                 }
             }
 
@@ -155,8 +173,9 @@ namespace PEP___Assembly_Parser
                 {
                     Console.WriteLine("Is ASR OF DATA PROCESSING");
                     Console.WriteLine("hexaLine before : " + hexaLine);
-                    hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.DPASR, 2).ToString("X"));
+                    hexaLine.Append(HexaData.DP+ HexaData.DPASR);
                     Console.WriteLine("hexaLine before : " + hexaLine);
+                    EvaluateRegister(item, ref  hexaLine, splitItems);
                     
                 }
             }
@@ -169,8 +188,9 @@ namespace PEP___Assembly_Parser
                 {
                     Console.WriteLine("Is LSR OF DATA PROCESSING");
                     Console.WriteLine("hexaLine before : " + hexaLine);
-                    hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.DPLSR, 2).ToString("X"));
+                    hexaLine.Append(HexaData.DP + HexaData.DPLSR);
                     Console.WriteLine("hexaLine after : " + hexaLine);
+                    EvaluateRegister(item, ref  hexaLine, splitItems);
                     
                 }
             }
@@ -179,24 +199,27 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("Contains BIC");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.BIC, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.BIC);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.CMN))
             {
                 Console.WriteLine("Contains CMN");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.CMN, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP + HexaData.CMN);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.CMP))
             {
                 Console.WriteLine("Contains CMP");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.CMP, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.CMP);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
 
@@ -204,16 +227,18 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("Contains MUL");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.MUL, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.MUL);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.MVN))
             {
                 Console.WriteLine("Contains MVN");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.MVN, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP + HexaData.MVN);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
 
@@ -221,24 +246,27 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("Contains ORR");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.ORR, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.ORR);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.ROR))
             {
                 Console.WriteLine("Contains ROR");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.ROR, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.ROR);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.RSB))
             {
                 Console.WriteLine("Contains RSB");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.RSB, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.RSB);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
 
             }
 
@@ -246,28 +274,31 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("Contains SBC");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.SBC, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP + HexaData.SBC);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.TST))
             {
                 Console.WriteLine("Contains TST");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.TST, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP + HexaData.TST);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
 
             else if (item.Contains(AssemblyData.EOR))
             {
                 Console.WriteLine("Contains EOR");
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.DP, 2).ToString("X") + Convert.ToInt32(HexaData.EOR, 2).ToString("X"));
+                hexaLine.Append(HexaData.DP+ HexaData.EOR);
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateRegister(item, ref  hexaLine, splitItems);
             }
         }//EvaluateDataProcessing()
 
-        private void EvaluateImmediateOperation(string item, ref StringBuilder hexaLine)
+        private void EvaluateImmediateOperation(string item, ref StringBuilder hexaLine, string[] spliItems)
         {
             Console.WriteLine("In EvaluateImmediateOperation()");
 
@@ -275,9 +306,12 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("The line contains " + AssemblyData.MOV);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.IM, 2).ToString("X") + Convert.ToInt32(HexaData.MOV, 2).ToString("X"));
+                hexaLine.Append(HexaData.IM + HexaData.MOV);
 
-                Console.WriteLine("hexaLine after : " + hexaLine);
+                Console.WriteLine("hexaLine after : " + hexaLine); 
+                EvaluateRegister(item, ref  hexaLine, spliItems);
+                EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+              
             }
 
             else if (item.Contains(AssemblyData.LSL))
@@ -287,9 +321,10 @@ namespace PEP___Assembly_Parser
                 {
                     Console.WriteLine("Is IMMEDIATE LSL");
                     Console.WriteLine("hexaLine before : " + hexaLine);
-                    hexaLine.Append(Convert.ToInt32(HexaData.IM, 2).ToString("X") + Convert.ToInt32(HexaData.ILSL, 2).ToString("X"));
+                    hexaLine.Append(HexaData.IM + HexaData.ILSL);
                     Console.WriteLine("hexaLine after : " + hexaLine);
-                    
+                    EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                    EvaluateRegister(item, ref  hexaLine, spliItems);
                 }
             }
 
@@ -300,9 +335,10 @@ namespace PEP___Assembly_Parser
                 {
                     Console.WriteLine("Is IMMEDIATE ASR");
                     Console.WriteLine("hexaLine before : " + hexaLine);
-                    hexaLine.Append(Convert.ToInt32(HexaData.IM, 2).ToString("X") + Convert.ToInt32(HexaData.IASR, 2).ToString("X"));
+                    hexaLine.Append(HexaData.IM + HexaData.IASR);
                     Console.WriteLine("hexaLine after : " + hexaLine);
-                    
+                    EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                    EvaluateRegister(item, ref  hexaLine, spliItems);
                 }
             }
 
@@ -313,9 +349,10 @@ namespace PEP___Assembly_Parser
                 {
                     Console.WriteLine("Is IMMEDIATE LSR");
                     Console.WriteLine("hexaLine before : " + hexaLine);
-                    hexaLine.Append(Convert.ToInt32(HexaData.IM, 2).ToString("X") + Convert.ToInt32(HexaData.ILSR, 2).ToString("X"));
+                    hexaLine.Append(HexaData.IM + HexaData.ILSR);
                     Console.WriteLine("hexaLine after : " + hexaLine);
-                    
+                    EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                    EvaluateRegister(item, ref  hexaLine, spliItems);
                 }
             }
                 
@@ -323,34 +360,41 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("The line contains " + AssemblyData.ADD);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.IM, 2).ToString("X") + Convert.ToInt32(HexaData.ADD, 2).ToString("X"));
+                hexaLine.Append(HexaData.IM + HexaData.ADD);
 
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                EvaluateRegister(item, ref  hexaLine, spliItems);
             }
 
             else  if (item.Contains(AssemblyData.SUB))
             {
                 Console.WriteLine("The line contains " + AssemblyData.SUB);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.IM, 2).ToString("X") + Convert.ToInt32(HexaData.SUB, 2).ToString("X"));
+                hexaLine.Append(HexaData.IM + HexaData.SUB);
 
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateImmediateValue(item, ref  hexaLine, spliItems);
+                EvaluateRegister(item, ref  hexaLine, spliItems);
             }
                      
 
 
         }//EvaluateImmediateOperation()
 
-        private void EvaluateBranch(string item, ref StringBuilder hexaLine)
+        private void EvaluateBranch(string item, ref StringBuilder hexaLine, string[] splitItems)
         {
             Console.WriteLine("In EvaluateBranch()");
             if (item.Contains(AssemblyData.B))
             {
                 Console.WriteLine("The line contains " + AssemblyData.B);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.B, 2).ToString("X"));
+                hexaLine.Append(HexaData.B);
 
                 Console.WriteLine("hexaLine after : " + hexaLine);
+                EvaluateCondition(item, ref hexaLine);
+                EvaluateLabel(item, ref hexaLine, splitItems);
+
             }
         }//EvaluateBranch()
 
@@ -361,7 +405,7 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("The line contains " + AssemblyData.HI);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.HI, 2).ToString("X"));
+                hexaLine.Append(HexaData.HI);
                 Console.WriteLine("hexaLine after : " + hexaLine);
             }
 
@@ -369,7 +413,7 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("The line contains " + AssemblyData.GT);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.GT, 2).ToString("X"));
+                hexaLine.Append(HexaData.GT);
                 Console.WriteLine("hexaLine after : " + hexaLine);
             }
 
@@ -377,9 +421,107 @@ namespace PEP___Assembly_Parser
             {
                 Console.WriteLine("The line contains " + AssemblyData.NE);
                 Console.WriteLine("hexaLine before : " + hexaLine);
-                hexaLine.Append(Convert.ToInt32(HexaData.NE, 2).ToString("X"));
+                hexaLine.Append(HexaData.NE);
                 Console.WriteLine("hexaLine after : " + hexaLine);
             }
+
+            else if (item.Contains(AssemblyData.EQ))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.EQ);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.EQ);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.CS))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.CS);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.CS);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.CC))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.CC);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.CC);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.MI))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.MI);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.MI);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.PL))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.PL);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.PL);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.VS))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.VS);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.VS);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.VC))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.VC);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.VC);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.LS))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.LS);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.LS);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.GE))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.GE);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.GE);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.LT))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.LT);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.LT);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.LE))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.LE);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.LE);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+            else if (item.Contains(AssemblyData.AL))
+            {
+                Console.WriteLine("The line contains " + AssemblyData.AL);
+                Console.WriteLine("hexaLine before : " + hexaLine);
+                hexaLine.Append(HexaData.AL);
+                Console.WriteLine("hexaLine after : " + hexaLine);
+            }
+
+
 
 
 
@@ -428,8 +570,8 @@ namespace PEP___Assembly_Parser
                     Console.WriteLine("hexaLine before  : " + hexaLine);
                     string temp = elem.Replace("0x", "");
                     temp.Trim();
-                    int value = Convert.ToInt32(temp);
-                    hexaLine.Append(Convert.ToString(value, 2));
+                   //int value = Convert.ToInt32(temp);
+                    hexaLine.Append(temp);
                     Console.WriteLine("hexaLine after  : " + hexaLine);
 
                 }
@@ -438,16 +580,26 @@ namespace PEP___Assembly_Parser
 
         private void EvaluateImmediateValue(string item, ref StringBuilder hexaLine, string[] splitItems)
         {
+            Console.WriteLine();
             foreach (string elem in splitItems)
             {
-                if(Regex.IsMatch(elem,@"^\d+$"))
+                if(elem.Contains("0") || elem.Contains("1") && !elem.Contains("0x") && !elem.Contains("r"))
                 {
-                    Console.WriteLine("Contains an immediate number");
-                    Console.WriteLine("hexaLine before  : " + hexaLine);
+                    Console.WriteLine("In EvaluateImmediateValue()");
+                    Console.WriteLine("hexaLine before " + hexaLine);
+                    hexaLine.Append(elem);
 
-                    int value = Convert.ToInt32(elem);
-                    hexaLine.Append(Convert.ToString(value, 2));
-                    Console.WriteLine("hexaLine after  : " + hexaLine);
+                    Console.WriteLine("hexaLine after : " + hexaLine);
+                
+
+                //if(Regex.IsMatch(elem,@"^\d+$"))
+                //{
+                //    Console.WriteLine("Contains an immediate number");
+                //    Console.WriteLine("hexaLine before  : " + hexaLine);
+
+                //    int value = Convert.ToInt32(elem);
+                //    hexaLine.Append(Convert.ToString(value, 2));
+                //    Console.WriteLine("hexaLine after  : " + hexaLine);
                 }
             }
         }//EvaluateImmediateValue()
