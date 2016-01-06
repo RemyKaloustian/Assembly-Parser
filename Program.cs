@@ -4,21 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * AUTHOR : Rémy KALOUSTIAN
+ * DESCRIPTION : This file will be executed, it is the main file.
+ */
+
+
 namespace PEP___Assembly_Parser
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Parser p = new Parser();
+            Parser p = new Parser(); //We create a new Parser
 
-           p.ReadFromFile();
+           p.ReadFromFile();//We read from the file specified
 
            Console.WriteLine("**************************************\n\n \t The result is in output.hex\n****************************************\n\n");
 
-           string str = "1111";
-           string strhex = Convert.ToInt32(str, 2).ToString("X");
-           Console.ReadLine();
-        }
-    }
-}
+         Console.ReadLine();//The user must enter a value to shut the console, so he can see the result of pasring step by step
+        }//Main()
+    }//class Program
+}//ns

@@ -4,17 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * AUTHOR : Rémy KALOUSTIAN
+ * DESCRIPTION : This file contains all the binary values of the keywords used during parsing.
+ */
+
+
 namespace PEP___Assembly_Parser
 {
     class HexaData
     {
+        //Data-processing first value 
         public static readonly string DP = "010000";
 
+        //Immediate first value
         public static readonly string IM = "00";
 
-        //public static readonly string SL = "0110";
-
-        //Hexa equivalent for data processing instructions
+        //Binary equivalent for data processing instructions
         public static readonly string AND = "0000";
         public static readonly string EOR = "0001";
         public static readonly string DPLSL = "0010";
@@ -32,7 +38,7 @@ namespace PEP___Assembly_Parser
         public static readonly string BIC = "1110";
         public static readonly string MVN = "1111";
 
-        //Hexa equivalent for immediate instructions
+        //Binary equivalent for immediate instructions
         public static readonly string ILSL = "000";
         public static readonly string ILSR = "001";
         public static readonly string IASR = "010";
@@ -40,14 +46,14 @@ namespace PEP___Assembly_Parser
         public static readonly string SUB = "01101";
         public static readonly string MOV = "100";
 
-        //Hexa equivalent for Store and Load
+        //Binary equivalent for Store and Load
         public static readonly string LDR = "01101";
         public static readonly string STR = "10010";
 
-        //Hexa for branch
+        //Binary for branch
         public static readonly string B = "1101";
 
-        //Hexa values for conditions
+        //Binary values for conditions
         public static readonly string EQ = "0000";
         public static readonly string NE = "0001";
         public static readonly string CS = "0010";
@@ -64,7 +70,7 @@ namespace PEP___Assembly_Parser
         public static readonly string LE = "1101";
         public static readonly string AL = "1110";
 
-       //Hexa equivalent for registers
+        //Binary equivalent for registers
         public static readonly string  R0 = "000";
         public static readonly string  R1 = "001";
         public static readonly string  R2 = "010";

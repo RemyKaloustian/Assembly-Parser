@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * AUTHOR : Rémy KALOUSTIAN
+ * DESCRIPTION : This file contains all the assembly values of the keywords used during parsing.
+ */
+
+
 namespace PEP___Assembly_Parser
 {
     class AssemblyData
     {
-
-        //Assembly instruction values
-
-
         //Operations on data processing
         public static readonly string AND = "and";
         public static readonly string EOR = "eor";
@@ -46,7 +48,6 @@ namespace PEP___Assembly_Parser
 
 
         //Assembly conditions values
-
         public static readonly string EQ = "eq";
         public static readonly string NE = "ne";
         public static readonly string CS = "cs";
