@@ -594,6 +594,13 @@ namespace PEP___Assembly_Parser
         {
             Console.WriteLine("In WriteInFile()");
             Console.WriteLine("Binary Line added : " + line);
+
+            //Error management
+            if(line.Length < 16 )
+            {
+                Console.WriteLine("An error occured, a line must be false, check the input file");
+                return;
+            }
             
             string hexa = Convert.ToInt32(line, 2).ToString("X");//We convert the binary line to hexadecimal
 

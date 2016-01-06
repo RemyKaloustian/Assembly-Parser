@@ -12,6 +12,14 @@ using System.Threading.Tasks;
 
 namespace PEP___Assembly_Parser
 {
+
+    /*=========================================================
+     * 
+     * CONTRAINTES
+     *  - Les registres doivent commencer par un R
+     *  - Les labels doivent commmencer par 0x
+     *  - Les valeurs des labels et immédiats sont directement en binaire et sur le bon nombre de bits
+      * */
     class Program
     {
         static void Main(string[] args)
